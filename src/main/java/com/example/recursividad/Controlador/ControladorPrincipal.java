@@ -28,9 +28,9 @@ public class ControladorPrincipal {
 
     public void abrirInteresCompuesto() {
         try {
-            IU_CalculoInter vista = new IU_CalculoInter();
+            IU_CalculoInter ui = new IU_CalculoInter();
             Stage newStage = new Stage();
-            vista.start(newStage);
+            ui.start(newStage);
             primaryStage.close();
         } catch (Exception e) {
             e.printStackTrace();
