@@ -19,14 +19,14 @@ import javafx.stage.Stage;
 public class IU_IntroRecurs extends Application {
 
     @Override
-    public void start(Stage primaryStage) {
+    public void start(Stage stage) throws Exception {
         // 1) Carga de fuentes para contenido
         Font contentFont = Font.loadFont(
                 getClass().getResourceAsStream("/com/example/Fuentes/CutiveMono-Regular.ttf"),
                 18
         );
 
-        ControladorIntroRecurs controlador = new ControladorIntroRecurs(primaryStage);
+        ControladorIntroRecurs controlador = new ControladorIntroRecurs(stage);
 
         // 2) Título con imagen personalizada
         Image titleImg = new Image(
@@ -35,7 +35,7 @@ public class IU_IntroRecurs extends Application {
         ImageView titleView = new ImageView(titleImg);
         titleView.setPreserveRatio(true);
         // Reducimos tamaño a 40% del ancho
-        titleView.fitWidthProperty().bind(primaryStage.widthProperty().multiply(0.4));
+        titleView.fitWidthProperty().bind(stage.widthProperty().multiply(0.4));
         DropShadow imgShadow = new DropShadow(4, Color.rgb(0, 0, 0, 0.3));
         imgShadow.setOffsetX(2);
         imgShadow.setOffsetY(2);
@@ -46,7 +46,7 @@ public class IU_IntroRecurs extends Application {
         conceptTitle.setFont(contentFont);
         conceptTitle.setFill(Color.WHITE);
         conceptTitle.setTextAlignment(TextAlignment.LEFT);
-        conceptTitle.wrappingWidthProperty().bind(primaryStage.widthProperty().multiply(0.8));
+        conceptTitle.wrappingWidthProperty().bind(stage.widthProperty().multiply(0.8));
 
         Text conceptDesc = new Text(
                 "La recursividad es una técnica donde una función se llama a sí misma para resolver subproblemas más pequeños, " +
@@ -55,39 +55,39 @@ public class IU_IntroRecurs extends Application {
         conceptDesc.setFont(contentFont);
         conceptDesc.setFill(Color.WHITE);
         conceptDesc.setTextAlignment(TextAlignment.JUSTIFY);
-        conceptDesc.wrappingWidthProperty().bind(primaryStage.widthProperty().multiply(0.8));
+        conceptDesc.wrappingWidthProperty().bind(stage.widthProperty().multiply(0.8));
 
         // 4) Importancia en Estructuras de Datos Lineales
         Text impTitle = new Text("Importancia en Estructuras de Datos Lineales");
         impTitle.setFont(contentFont);
         impTitle.setFill(Color.WHITE);
         impTitle.setTextAlignment(TextAlignment.LEFT);
-        impTitle.wrappingWidthProperty().bind(primaryStage.widthProperty().multiply(0.8));
+        impTitle.wrappingWidthProperty().bind(stage.widthProperty().multiply(0.8));
 
         Text imp1 = new Text("\u2022 Simplifica problemas complejos en problemas más sencillos.");
         imp1.setFont(contentFont);
         imp1.setFill(Color.WHITE);
         imp1.setTextAlignment(TextAlignment.LEFT);
-        imp1.wrappingWidthProperty().bind(primaryStage.widthProperty().multiply(0.8));
+        imp1.wrappingWidthProperty().bind(stage.widthProperty().multiply(0.8));
 
         Text imp2 = new Text("\u2022 Facilita la manipulación de estructuras auto-referenciales (como listas enlazadas).");
         imp2.setFont(contentFont);
         imp2.setFill(Color.WHITE);
         imp2.setTextAlignment(TextAlignment.LEFT);
-        imp2.wrappingWidthProperty().bind(primaryStage.widthProperty().multiply(0.8));
+        imp2.wrappingWidthProperty().bind(stage.widthProperty().multiply(0.8));
 
         // 5) Ejemplo en pseudocódigo agrupado
         Text ejemploTitle = new Text("Ejemplo en pseudocódigo");
         ejemploTitle.setFont(contentFont);
         ejemploTitle.setFill(Color.WHITE);
         ejemploTitle.setTextAlignment(TextAlignment.LEFT);
-        ejemploTitle.wrappingWidthProperty().bind(primaryStage.widthProperty().multiply(0.8));
+        ejemploTitle.wrappingWidthProperty().bind(stage.widthProperty().multiply(0.8));
 
         Text ej1Title = new Text("Factorial Recursivo");
         ej1Title.setFont(contentFont);
         ej1Title.setFill(Color.WHITE);
         ej1Title.setTextAlignment(TextAlignment.LEFT);
-        ej1Title.wrappingWidthProperty().bind(primaryStage.widthProperty().multiply(0.8));
+        ej1Title.wrappingWidthProperty().bind(stage.widthProperty().multiply(0.8));
 
         Text ej1 = new Text(
                 "FUNCION Factorial(n)\n" +
@@ -101,13 +101,13 @@ public class IU_IntroRecurs extends Application {
         ej1.setFont(Font.font("Monospaced", 13));
         ej1.setFill(Color.web("#e9c46a"));
         ej1.setTextAlignment(TextAlignment.LEFT);
-        ej1.wrappingWidthProperty().bind(primaryStage.widthProperty().multiply(0.8));
+        ej1.wrappingWidthProperty().bind(stage.widthProperty().multiply(0.8));
 
         Text ej2Title = new Text("Imprimir lista enlazada recursivamente");
         ej2Title.setFont(contentFont);
         ej2Title.setFill(Color.WHITE);
         ej2Title.setTextAlignment(TextAlignment.LEFT);
-        ej2Title.wrappingWidthProperty().bind(primaryStage.widthProperty().multiply(0.8));
+        ej2Title.wrappingWidthProperty().bind(stage.widthProperty().multiply(0.8));
 
         Text ej2 = new Text(
                 "FUNCION ImprimirLista(nodo)\n" +
@@ -122,7 +122,7 @@ public class IU_IntroRecurs extends Application {
         ej2.setFont(Font.font("Monospaced", 13));
         ej2.setFill(Color.web("#e9c46a"));
         ej2.setTextAlignment(TextAlignment.LEFT);
-        ej2.wrappingWidthProperty().bind(primaryStage.widthProperty().multiply(0.8));
+        ej2.wrappingWidthProperty().bind(stage.widthProperty().multiply(0.8));
 
         // Contenedor de pseudocódigos
         VBox pseudoBox = new VBox(5, ej1Title, ej1, ej2Title, ej2);
@@ -159,10 +159,10 @@ public class IU_IntroRecurs extends Application {
 
         // 8) Escena y Stage responsive
         Scene scene = new Scene(root);
-        primaryStage.setScene(scene);
-        primaryStage.setTitle("Introducción a la Recursividad");
-        primaryStage.setMaximized(true);
-        primaryStage.show();
+        stage.setScene(scene);
+        stage.setTitle("Introducción a la Recursividad");
+        stage.setMaximized(true);
+        stage.show();
     }
 
     public static void main(String[] args) {

@@ -4,19 +4,19 @@ import com.example.recursividad.Vista.IU_Portada;
 import javafx.stage.Stage;
 
 public class ControladorIntroRecurs {
+    private final Stage primaryStage;
 
-    private final Stage stage;
-
-    public ControladorIntroRecurs(Stage stage) {
-        this.stage = stage;
+    public ControladorIntroRecurs(Stage primaryStage) {
+        this.primaryStage = primaryStage;
     }
 
     public void volverPortada() {
         try {
-            // Abre de nuevo la ventana de portada
-            new IU_Portada().start(new Stage());
-            // Cierra la ventana actual
-            stage.close();
+            IU_Portada portada = new IU_Portada();
+            Stage newStage = new Stage();
+            portada.start(newStage);
+            // Cerramos la ventana de introducción
+            primaryStage.close();
         } catch (Exception e) {
             e.printStackTrace();
         }

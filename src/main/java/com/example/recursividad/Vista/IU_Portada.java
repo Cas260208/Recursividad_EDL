@@ -23,7 +23,7 @@ import java.util.List;
 public class IU_Portada extends Application {
 
     @Override
-    public void start(Stage primaryStage) {
+    public void start(Stage stage) throws Exception{
         // 0) Fuente de datos (mucho más pequeña ahora)
         Font dataFont = Font.loadFont(
                 getClass().getResourceAsStream("/com/example/Fuentes/Pixeled.ttf"),
@@ -31,7 +31,7 @@ public class IU_Portada extends Application {
         );
 
         // 1) Controlador
-        ControladorPrincipal controlador = new ControladorPrincipal(primaryStage);
+        ControladorPrincipal controlador = new ControladorPrincipal(stage);
 
         // 2) Imagen de título
         Image titleImage = new Image(
@@ -44,10 +44,6 @@ public class IU_Portada extends Application {
         // 3) Botones con icono y texto blanco
         Button introBtn    = makeIconButton("/com/example/Imagenes/recu.png",
                 "Introducción a\nRecursividad", 140, 140);
-        introBtn.setFont(Font.loadFont(
-                getClass().getResourceAsStream("/com/example/Fuentes/Pixeled.ttf"),
-                10
-        ));
         Button interesBtn  = makeIconButton("/com/example/Imagenes/ca.png",
                 "Cálculo de Interés\nCompuesto", 140, 140);
         Button hanoiBtn    = makeIconButton("/com/example/Imagenes/th.png",
@@ -71,7 +67,7 @@ public class IU_Portada extends Application {
         }
 
         // 4) Asociar acciones del controlador
-        introBtn   .setOnAction(e -> controlador.abrirIntroduccion());
+        introBtn.setOnAction(e -> controlador.abrirIntroduccion());
         interesBtn .setOnAction(e -> controlador.abrirInteresCompuesto());
         hanoiBtn   .setOnAction(e -> controlador.abrirTorresDeHanoi());
         potenciaBtn.setOnAction(e -> controlador.abrirPotencia());
@@ -124,10 +120,10 @@ public class IU_Portada extends Application {
 
         // 8) Escena y Stage
         Scene scene = new Scene(root);
-        primaryStage.setScene(scene);
-        primaryStage.setTitle("Recursividad");
-        primaryStage.setMaximized(true);
-        primaryStage.show();
+        stage.setScene(scene);
+        stage.setTitle("Recursividad");
+        stage.setMaximized(true);
+        stage.show();
     }
 
     private Button makeIconButton(String imagePath, String text, double w, double h) {

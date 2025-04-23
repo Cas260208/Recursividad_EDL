@@ -1,4 +1,3 @@
-// src/main/java/com/example/recursividad/Controlador/ControladorPrincipal.java
 package com.example.recursividad.Controlador;
 
 import com.example.recursividad.Vista.IU_IntroRecurs;
@@ -9,16 +8,19 @@ import com.example.recursividad.Vista.IU_SubCon;
 import javafx.stage.Stage;
 
 public class ControladorPrincipal {
-    private final Stage ownerStage;
+    private final Stage primaryStage;
 
-    public ControladorPrincipal(Stage ownerStage) {
-        this.ownerStage = ownerStage;
+    public ControladorPrincipal(Stage primaryStage) {
+        this.primaryStage = primaryStage;
     }
 
     public void abrirIntroduccion() {
         try {
-            // Cada IU_* extiende Application, así que llamamos start() manualmente en una nueva ventana
-            new IU_IntroRecurs().start(new Stage());
+            IU_IntroRecurs introduccion = new IU_IntroRecurs();
+            Stage newStage = new Stage();
+            introduccion.start(newStage);
+            // Cerramos la ventana actual
+            primaryStage.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -26,7 +28,10 @@ public class ControladorPrincipal {
 
     public void abrirInteresCompuesto() {
         try {
-            new IU_CalculoInter().start(new Stage());
+            IU_CalculoInter vista = new IU_CalculoInter();
+            Stage newStage = new Stage();
+            vista.start(newStage);
+            primaryStage.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -34,7 +39,10 @@ public class ControladorPrincipal {
 
     public void abrirPotencia() {
         try {
-            new IU_CalcPoten().start(new Stage());
+            IU_CalcPoten vista = new IU_CalcPoten();
+            Stage newStage = new Stage();
+            vista.start(newStage);
+            primaryStage.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -42,7 +50,10 @@ public class ControladorPrincipal {
 
     public void abrirTorresDeHanoi() {
         try {
-            new IU_TorreHan().start(new Stage());
+            IU_TorreHan vista = new IU_TorreHan();
+            Stage newStage = new Stage();
+            vista.start(newStage);
+            primaryStage.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -50,7 +61,10 @@ public class ControladorPrincipal {
 
     public void abrirSubconjuntos() {
         try {
-            new IU_SubCon().start(new Stage());
+            IU_SubCon vista = new IU_SubCon();
+            Stage newStage = new Stage();
+            vista.start(newStage);
+            primaryStage.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
