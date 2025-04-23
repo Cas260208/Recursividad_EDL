@@ -12,5 +12,6 @@ module com.example.recursividad {
     requires com.almasb.fxgl.all;
 
     opens com.example.recursividad to javafx.fxml;
-    exports com.example.recursividad;
+    opens  com.example.recursividad.Vista to javafx.graphics;
+    exports com.example.recursividad.Vista;
 }
