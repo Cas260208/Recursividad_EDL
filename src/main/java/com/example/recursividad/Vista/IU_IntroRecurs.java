@@ -9,6 +9,7 @@ import javafx.scene.control.Button;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -20,145 +21,134 @@ public class IU_IntroRecurs extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        // 1) Carga de fuentes para contenido
+        // 1) Fuentes
+        Font titleFont   = Font.loadFont(
+                getClass().getResourceAsStream("/com/example/Fuentes/Pixeled.ttf"), 16);
         Font contentFont = Font.loadFont(
-                getClass().getResourceAsStream("/com/example/Fuentes/CutiveMono-Regular.ttf"),
-                18
-        );
+                getClass().getResourceAsStream("/com/example/Fuentes/CutiveMono-Regular.ttf"), 16);
 
         ControladorIntroRecurs controlador = new ControladorIntroRecurs(stage);
 
-        // 2) Título con imagen personalizada
-        Image titleImg = new Image(
-                getClass().getResourceAsStream("/com/example/Imagenes/IR.png")
-        );
+        // 2) Título con imagen al 40%
+        Image titleImg = new Image(getClass().getResourceAsStream("/com/example/Imagenes/IR.png"));
         ImageView titleView = new ImageView(titleImg);
         titleView.setPreserveRatio(true);
-        // Reducimos tamaño a 40% del ancho
         titleView.fitWidthProperty().bind(stage.widthProperty().multiply(0.4));
-        DropShadow imgShadow = new DropShadow(4, Color.rgb(0, 0, 0, 0.3));
-        imgShadow.setOffsetX(2);
-        imgShadow.setOffsetY(2);
-        titleView.setEffect(imgShadow);
+        titleView.setEffect(new DropShadow(4, Color.rgb(0,0,0,0.3)));
 
-        // 3) Concepto de Recursividad
-        Text conceptTitle = new Text("Concepto de Recursividad");
-        conceptTitle.setFont(contentFont);
-        conceptTitle.setFill(Color.WHITE);
-        conceptTitle.setTextAlignment(TextAlignment.LEFT);
-        conceptTitle.wrappingWidthProperty().bind(stage.widthProperty().multiply(0.8));
+        // 3) Explicación de la recursividad
+        Text conceptTitle = new Text("¿Qué es la recursividad?");
+        conceptTitle.setFont(titleFont);
+        conceptTitle.setFill(Color.web("#e9c46a"));
+        conceptTitle.setTextAlignment(TextAlignment.CENTER);
 
         Text conceptDesc = new Text(
-                "La recursividad es una técnica donde una función se llama a sí misma para resolver subproblemas más pequeños, " +
-                        "hasta llegar a un caso base que detiene el proceso."
+                "La recursividad es una técnica de programación donde una función" +
+                        " se invoca a sí misma para resolver un problema dividiéndolo" +
+                        " en subproblemas más pequeños, hasta alcanzar un caso base que" +
+                        " detiene las llamadas recursivas."
         );
         conceptDesc.setFont(contentFont);
         conceptDesc.setFill(Color.WHITE);
         conceptDesc.setTextAlignment(TextAlignment.JUSTIFY);
         conceptDesc.wrappingWidthProperty().bind(stage.widthProperty().multiply(0.8));
 
-        // 4) Importancia en Estructuras de Datos Lineales
-        Text impTitle = new Text("Importancia en Estructuras de Datos Lineales");
-        impTitle.setFont(contentFont);
-        impTitle.setFill(Color.WHITE);
-        impTitle.setTextAlignment(TextAlignment.LEFT);
-        impTitle.wrappingWidthProperty().bind(stage.widthProperty().multiply(0.8));
+        // 4) Importancia
+        Text importanceTitle = new Text("¿Por qué usar recursividad?");
+        importanceTitle.setFont(titleFont);
+        importanceTitle.setFill(Color.web("#2a9d8f"));
 
-        Text imp1 = new Text("\u2022 Simplifica problemas complejos en problemas más sencillos.");
-        imp1.setFont(contentFont);
-        imp1.setFill(Color.WHITE);
-        imp1.setTextAlignment(TextAlignment.LEFT);
-        imp1.wrappingWidthProperty().bind(stage.widthProperty().multiply(0.8));
+        Text imp1 = new Text("• Divide problemas complejos en subproblemas manejables.");
+        Text imp2 = new Text("• Facilita el trato de estructuras auto-referenciales (árboles, listas).");
+        Text imp3 = new Text("• Proporciona soluciones elegantes y mantenibles.");
+        for (Text t : new Text[]{imp1, imp2, imp3}) {
+            t.setFont(contentFont);
+            t.setFill(Color.WHITE);
+            t.setTextAlignment(TextAlignment.LEFT);
+            t.wrappingWidthProperty().bind(stage.widthProperty().multiply(0.8));
+        }
 
-        Text imp2 = new Text("\u2022 Facilita la manipulación de estructuras auto-referenciales (como listas enlazadas).");
-        imp2.setFont(contentFont);
-        imp2.setFill(Color.WHITE);
-        imp2.setTextAlignment(TextAlignment.LEFT);
-        imp2.wrappingWidthProperty().bind(stage.widthProperty().multiply(0.8));
+        // 5) Ejemplo 1: Factorial
+        Text ex1Title = new Text("Ejemplo 1: Factorial recursivo");
+        ex1Title.setFont(titleFont);
+        ex1Title.setFill(Color.web("#e76f51"));
 
-        // 5) Ejemplo en pseudocódigo agrupado
-        Text ejemploTitle = new Text("Ejemplo en pseudocódigo");
-        ejemploTitle.setFont(contentFont);
-        ejemploTitle.setFill(Color.WHITE);
-        ejemploTitle.setTextAlignment(TextAlignment.LEFT);
-        ejemploTitle.wrappingWidthProperty().bind(stage.widthProperty().multiply(0.8));
 
-        Text ej1Title = new Text("Factorial Recursivo");
-        ej1Title.setFont(contentFont);
-        ej1Title.setFill(Color.WHITE);
-        ej1Title.setTextAlignment(TextAlignment.LEFT);
-        ej1Title.wrappingWidthProperty().bind(stage.widthProperty().multiply(0.8));
-
-        Text ej1 = new Text(
-                "FUNCION Factorial(n)\n" +
-                        "    SI (n == 0 O n == 1) ENTONCES\n" +
-                        "        RETORNAR 1\n" +
-                        "    SINO\n" +
-                        "        RETORNAR n * Factorial(n - 1)\n" +
-                        "    FIN SI\n" +
-                        "FIN FUNCION"
+        /***Gráfico (árbol de llamadas)
+        Image imgFact = new Image(
+                getClass().getResourceAsStream("/com/example/Imagenes/FactorialTree.png")
         );
-        ej1.setFont(Font.font("Monospaced", 13));
-        ej1.setFill(Color.web("#e9c46a"));
-        ej1.setTextAlignment(TextAlignment.LEFT);
-        ej1.wrappingWidthProperty().bind(stage.widthProperty().multiply(0.8));
+        ImageView factView = new ImageView(imgFact);
+        factView.setPreserveRatio(true);
+        factView.fitWidthProperty().bind(stage.widthProperty().multiply(0.25));
+        factView.setEffect(new DropShadow(4, Color.rgb(0,0,0,0.3)));**/
 
-        Text ej2Title = new Text("Imprimir lista enlazada recursivamente");
-        ej2Title.setFont(contentFont);
-        ej2Title.setFill(Color.WHITE);
-        ej2Title.setTextAlignment(TextAlignment.LEFT);
-        ej2Title.wrappingWidthProperty().bind(stage.widthProperty().multiply(0.8));
-
-        Text ej2 = new Text(
-                "FUNCION ImprimirLista(nodo)\n" +
-                        "    SI nodo ES NULO ENTONCES\n" +
-                        "        RETORNAR\n" +
-                        "    SINO\n" +
-                        "        MOSTRAR nodo.valor\n" +
-                        "        ImprimirLista(nodo.siguiente)\n" +
-                        "    FIN SI\n" +
-                        "FIN FUNCION"
+        // Pseudocódigo
+        Text factCode = new Text(
+                "int factorial(int n) {\n" +
+                        "    if (n <= 1) return 1;        // caso base\n" +
+                        "    else return n * factorial(n - 1); // recursión\n" +
+                        "}"
         );
-        ej2.setFont(Font.font("Monospaced", 13));
-        ej2.setFill(Color.web("#e9c46a"));
-        ej2.setTextAlignment(TextAlignment.LEFT);
-        ej2.wrappingWidthProperty().bind(stage.widthProperty().multiply(0.8));
+        factCode.setFont(Font.font("Monospaced", 14));
+        factCode.setFill(Color.web("#e9c46a"));
+        factCode.setTextAlignment(TextAlignment.LEFT);
+        factCode.wrappingWidthProperty().bind(stage.widthProperty().multiply(0.4));
 
-        // Contenedor de pseudocódigos
-        VBox pseudoBox = new VBox(5, ej1Title, ej1, ej2Title, ej2);
-        pseudoBox.setAlignment(Pos.TOP_LEFT);
-        pseudoBox.setPadding(new Insets(10, 0, 0, 0));
+        HBox example1 = new HBox(20,  factCode);
+        example1.setAlignment(Pos.CENTER_LEFT);
 
-        // 6) Botón Regresar con estilo de portada
-        Button btnRegresar = new Button("Regresar");
-        btnRegresar.setFont(contentFont);
-        btnRegresar.setStyle(
+        // 6) Ejemplo 2: Imprimir lista enlazada
+        Text ex2Title = new Text("Ejemplo 2: Imprimir lista enlazada");
+        ex2Title.setFont(titleFont);
+        ex2Title.setFill(Color.web("#f4a261"));
+
+        Text listCode = new Text(
+                "void printList(Node node) {\n" +
+                        "    if (node == null) return;      // caso base\n" +
+                        "    System.out.println(node.value);   // procesar\n" +
+                        "    printList(node.next);              // recursión\n" +
+                        "}"
+        );
+        listCode.setFont(Font.font("Monospaced", 14));
+        listCode.setFill(Color.web("#f4a261"));
+        listCode.setTextAlignment(TextAlignment.LEFT);
+        listCode.wrappingWidthProperty().bind(stage.widthProperty().multiply(0.4));
+
+        HBox example2 = new HBox(20,  listCode);
+        example2.setAlignment(Pos.CENTER_LEFT);
+
+        // 7) Botón regresar
+        Button btnBack = new Button("Regresar");
+        btnBack.setFont(contentFont);
+        btnBack.setStyle(
                 "-fx-background-color: transparent;" +
                         "-fx-border-color: #cccccc;" +
-                        "-fx-border-radius: 20;" +
-                        "-fx-background-radius: 20;" +
+                        "-fx-border-radius: 8;" +
+                        "-fx-background-radius: 8;" +
                         "-fx-text-fill: white;"
         );
-        DropShadow btnShadow = new DropShadow(6, Color.rgb(0, 0, 0, 0.3));
-        btnRegresar.setEffect(btnShadow);
-        btnRegresar.setPrefHeight(40);
-        btnRegresar.setOnAction(e -> controlador.volverPortada());
+        btnBack.setEffect(new DropShadow(4, Color.BLACK));
+        btnBack.setOnAction(e -> controlador.volverPortada());
 
-        // 7) Layout principal con todos los elementos
-        VBox root = new VBox(15,
+        // 8) Layout final
+        VBox root = new VBox(20,
                 titleView,
                 conceptTitle, conceptDesc,
-                impTitle, imp1, imp2,
-                ejemploTitle,
-                pseudoBox,
-                btnRegresar
+                importanceTitle, imp1, imp2, imp3,
+                ex1Title, example1,
+                ex2Title, example2,
+                btnBack
         );
         root.setAlignment(Pos.TOP_CENTER);
         root.setPadding(new Insets(20));
-        root.setStyle("-fx-background-color: BLACK;");
+        root.setStyle("-fx-background-color: BLACK; -fx-border-color: WHITE");
 
-        // 8) Escena y Stage responsive
-        Scene scene = new Scene(root);
+        VBox rootR = new VBox(10, root);
+        rootR.setAlignment(Pos.CENTER);
+        rootR.setStyle("-fx-background-color: BLACK; -fx-padding: 10");
+
+        Scene scene = new Scene(rootR);
         stage.setScene(scene);
         stage.setTitle("Introducción a la Recursividad");
         stage.setMaximized(true);

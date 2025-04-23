@@ -194,9 +194,13 @@ public class IU_CalculoInter extends Application {
         );
         root.setAlignment(Pos.TOP_CENTER);
         root.setPadding(new Insets(20));
-        root.setStyle("-fx-background-color: BLACK;");
+        root.setStyle("-fx-background-color: BLACK; -fx-border-color: WHITE");
 
-        Scene scene = new Scene(root);
+        VBox rootR = new VBox(10, root);
+        rootR.setAlignment(Pos.CENTER);
+        rootR.setStyle("-fx-background-color: BLACK; -fx-padding: 10");
+
+        Scene scene = new Scene(rootR);
         primaryStage.setScene(scene);
         primaryStage.setTitle("Cálculo de Interés Compuesto");
         primaryStage.setMaximized(true);

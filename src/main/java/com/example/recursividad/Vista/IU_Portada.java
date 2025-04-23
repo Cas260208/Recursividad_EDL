@@ -2,21 +2,18 @@ package com.example.recursividad.Vista;
 
 import com.example.recursividad.Controlador.ControladorPrincipal;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
-import javafx.scene.layout.StackPane;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
-import javafx.scene.chart.LineChart;
 import javafx.stage.Stage;
 
 import java.util.List;
@@ -25,7 +22,7 @@ public class IU_Portada extends Application {
 
     @Override
     public void start(Stage stage) throws Exception{
-        // 0) Fuente de datos (mucho más pequeña ahora)
+        // 0) Fuente de datos
         Font dataFont = Font.loadFont(
                 getClass().getResourceAsStream("/com/example/Fuentes/Pixeled.ttf"),
                 10
@@ -35,14 +32,12 @@ public class IU_Portada extends Application {
         ControladorPrincipal controlador = new ControladorPrincipal(stage);
 
         // 2) Imagen de título
-        Image titleImage = new Image(
-                getClass().getResourceAsStream("/com/example/Imagenes/title.png")
-        );
+        Image titleImage = new Image(getClass().getResourceAsStream("/com/example/Imagenes/title.png"));
         ImageView titleView = new ImageView(titleImage);
         titleView.setPreserveRatio(true);
         titleView.setFitWidth(700);
 
-        // 3) Botones con icono y texto blanco
+        // 3) Botones principales
         Button introBtn    = makeIconButton("/com/example/Imagenes/recu.png",
                 "Introducción a\nRecursividad", 140, 140);
         Button interesBtn  = makeIconButton("/com/example/Imagenes/ca.png",
@@ -56,7 +51,7 @@ public class IU_Portada extends Application {
 
         List<Button> botones = List.of(introBtn, interesBtn, hanoiBtn, potenciaBtn, subconjBtn);
         DropShadow shadow = new DropShadow(6, Color.rgb(0,0,0,0.3));
-        for (Button b : botones) {
+        botones.forEach(b -> {
             b.setEffect(shadow);
             b.setPadding(new Insets(10));
             b.setStyle(
@@ -65,21 +60,42 @@ public class IU_Portada extends Application {
                             "-fx-border-radius: 20;" +
                             "-fx-background-radius: 20;"
             );
-        }
+        });
 
-        // 4) Asociar acciones del controlador
-        introBtn.setOnAction(e -> controlador.abrirIntroduccion());
+        introBtn   .setOnAction(e -> controlador.abrirIntroduccion());
         interesBtn .setOnAction(e -> controlador.abrirInteresCompuesto());
         hanoiBtn   .setOnAction(e -> controlador.abrirTorresDeHanoi());
         potenciaBtn.setOnAction(e -> controlador.abrirPotencia());
         subconjBtn .setOnAction(e -> controlador.abrirSubconjuntos());
 
-        // 5) FlowPane para los botones
-        HBox botonesPane = new HBox(20,
-                introBtn, interesBtn, hanoiBtn, potenciaBtn, subconjBtn);
+        HBox botonesPane = new HBox(20, introBtn, interesBtn, hanoiBtn, potenciaBtn, subconjBtn);
         botonesPane.setAlignment(Pos.CENTER);
 
-        // 6) Datos personales (mucho más pequeños)
+        // 4) Botones de ayuda / salir
+        Button helpBtn = new Button("Instrucciones");
+        helpBtn.setFont(dataFont);
+        helpBtn.setOnAction(e -> {
+            Alert info = new Alert(Alert.AlertType.INFORMATION);
+            info.setTitle("Ayuda rápida");
+            info.setHeaderText("Cómo usar Recursividad");
+            info.setContentText(
+                    "• Haz clic en cada icono para abrir la sección correspondiente.\n" +
+                            "• En cada ventana tendrás ejemplos, explicaciones y gráficos.\n" +
+                            "• Usa los botones “Regresar” para volver a esta portada.\n\n" +
+                            "¡Disfruta explorando la recursividad!"
+            );
+            info.showAndWait();
+        });
+
+        Button exitBtn = new Button("Salir");
+        exitBtn.setFont(dataFont);
+        exitBtn.setOnAction(e -> Platform.exit());
+
+        HBox auxPane = new HBox(10, helpBtn, exitBtn);
+        auxPane.setAlignment(Pos.CENTER);
+        auxPane.setPadding(new Insets(10,0,0,0));
+
+        // 5) Datos personales
         Label uniLabel     = new Label("UNIVERSIDAD AUTÓNOMA METROPOLITANA, UNIDAD CUAJIMALPA");
         Label deptoLabel   = new Label("DEPARTAMENTO DE MATEMÁTICAS APLICADAS Y SISTEMAS");
         Label carreraLabel = new Label("INGENIERÍA EN COMPUTACIÓN");
@@ -91,16 +107,21 @@ public class IU_Portada extends Application {
 
         for (Label lbl : List.of(uniLabel, deptoLabel, carreraLabel, ueaLabel, profLabel, m1, m2, m3)) {
             lbl.setFont(dataFont);
-            // Usamos la misma paleta según tu rol
             switch (lbl.getText()) {
-                case "UNIVERSIDAD AUTÓNOMA METROPOLITANA, UNIDAD CUAJIMALPA" -> lbl.setTextFill(Color.web("#e76f51"));
-                case "DEPARTAMENTO DE MATEMÁTICAS APLICADAS Y SISTEMAS"    -> lbl.setTextFill(Color.web("#f4a261"));
-                case "INGENIERÍA EN COMPUTACIÓN"                          -> lbl.setTextFill(Color.web("#e9c46a"));
-                case "ESTRUCTURA DE DATOS LINEALES"                       -> lbl.setTextFill(Color.web("#2a9d8f"));
-                case "ROGELIO ERNESTO GARCÍA CHÁVEZ"                      -> lbl.setTextFill(Color.web("#e76f51"));
-                case "CASANDRA ZETINA RODRÍGUEZ"                         -> lbl.setTextFill(Color.web("#f4a261"));
-                case "MARIA FERNANDA RICO ARELLANO"                      -> lbl.setTextFill(Color.web("#e9c46a"));
-                case "ÁNGEL ARMANDO OLIVEROS GUTIÉRREZ"                  -> lbl.setTextFill(Color.web("#2a9d8f"));
+                case "UNIVERSIDAD AUTÓNOMA METROPOLITANA, UNIDAD CUAJIMALPA" ->
+                        lbl.setTextFill(Color.web("#e76f51"));
+                case "DEPARTAMENTO DE MATEMÁTICAS APLICADAS Y SISTEMAS" ->
+                        lbl.setTextFill(Color.web("#f4a261"));
+                case "INGENIERÍA EN COMPUTACIÓN" ->
+                        lbl.setTextFill(Color.web("#e9c46a"));
+                case "ESTRUCTURA DE DATOS LINEALES" ->
+                        lbl.setTextFill(Color.web("#2a9d8f"));
+                case "ROGELIO ERNESTO GARCÍA CHÁVEZ", "CASANDRA ZETINA RODRÍGUEZ" ->
+                        lbl.setTextFill(Color.web("#e76f51"));
+                case "MARIA FERNANDA RICO ARELLANO" ->
+                        lbl.setTextFill(Color.web("#f4a261"));
+                case "ÁNGEL ARMANDO OLIVEROS GUTIÉRREZ" ->
+                        lbl.setTextFill(Color.web("#2a9d8f"));
             }
         }
         VBox dataBox = new VBox(0,
@@ -108,19 +129,22 @@ public class IU_Portada extends Application {
         );
         dataBox.setAlignment(Pos.CENTER);
 
-        // 7) Contenedor principal
-        VBox rootR = new VBox(40, titleView, botonesPane, dataBox);
+        // 6) Contenedor principal
+        VBox root = new VBox(30,
+                titleView,
+                botonesPane,
+                dataBox,
+                auxPane
+        );
+        root.setAlignment(Pos.TOP_CENTER);
+        root.setPadding(new Insets(20));
+        root.setStyle("-fx-background-color: BLACK; -fx-border-color: WHITE");
+
+        VBox rootR = new VBox(10, root);
         rootR.setAlignment(Pos.CENTER);
-        rootR.setPadding(new Insets(10));
-        rootR.setStyle("-fx-background-color: BLACK; -fx-border-color: white");
+        rootR.setStyle("-fx-background-color: BLACK; -fx-padding: 10");
 
-        VBox root = new VBox(10, rootR);
-        root.setAlignment(Pos.CENTER);
-        root.setPadding(new Insets(10));
-        root.setStyle("-fx-background-color: BLACK");
-
-        // 8) Escena y Stage
-        Scene scene = new Scene(root);
+        Scene scene = new Scene(rootR);
         stage.setScene(scene);
         stage.setTitle("Recursividad");
         stage.setMaximized(true);
@@ -145,7 +169,6 @@ public class IU_Portada extends Application {
 
         Button btn = new Button();
         btn.setGraphic(stack);
-        btn.setText("");
         btn.setPrefSize(w + 40, h + 60);
         return btn;
     }

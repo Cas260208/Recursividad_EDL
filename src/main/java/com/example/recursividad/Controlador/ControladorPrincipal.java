@@ -19,7 +19,6 @@ public class ControladorPrincipal {
             IU_IntroRecurs introduccion = new IU_IntroRecurs();
             Stage newStage = new Stage();
             introduccion.start(newStage);
-            // Cerramos la ventana actual
             primaryStage.close();
         } catch (Exception e) {
             e.printStackTrace();

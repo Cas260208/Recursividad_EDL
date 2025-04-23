@@ -150,17 +150,17 @@ public class IU_TorreHan extends Application {
         btnBack.setEffect(new DropShadow(4, Color.BLACK));
         btnBack.setOnAction(e -> ctrl.volverPortada());
 
-        HBox controls = new HBox(20, btnRun, btnBack);
-        controls.setAlignment(Pos.CENTER);
-        controls.setPadding(new Insets(10, 0, 0, 0));
-
         // Layout general
-        VBox root = new VBox(20, titleView, expl, towerPane, moveBox, controls);
+        VBox root = new VBox(20, titleView, expl, btnRun, towerPane, moveBox, btnBack);
         root.setAlignment(Pos.TOP_CENTER);
         root.setPadding(new Insets(20));
-        root.setStyle("-fx-background-color: BLACK;");
+        root.setStyle("-fx-background-color: BLACK; -fx-border-color: WHITE");
 
-        primaryStage.setScene(new Scene(root));
+        VBox rootR = new VBox(10, root);
+        rootR.setAlignment(Pos.CENTER);
+        rootR.setStyle("-fx-background-color: BLACK; -fx-padding: 10");
+
+        primaryStage.setScene(new Scene(rootR));
         primaryStage.setTitle("Torres de Hanoi (4 discos)");
         primaryStage.setMaximized(true);
         primaryStage.show();
